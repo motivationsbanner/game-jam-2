@@ -14,34 +14,34 @@ public class GameScreen extends Group {
     private Group blocks = new Group();
     private static Player player = new Player();
     private int score = 0;
-    private AnimationTimer gameLoop= new AnimationTimer(){
+    private AnimationTimer gameLoop = new AnimationTimer() {
         @Override
         public void handle(long now) {
             player.update();
             //move the blocks to the left for the gamespeed
             Iterator blockIterator = blocks.getChildren().iterator();
-            while(blockIterator.hasNext()){
-                Block block = (Block)blockIterator.next();
+            while (blockIterator.hasNext()) {
+                Block block = (Block) blockIterator.next();
                 block.move(movementSpeed);
                 //check if the player collides with a block and the player has to die
-                if(block.getLayoutBounds().intersects(player.getPlayerHitbox())){
+                if (block.getLayoutBounds().intersects(player.getPlayerHitbox())) {
                     die();
                 }
                 //if the feet frome the player hit the hitbox move the player up
-                if(block.getLayoutBounds().intersects(player.getFeetHitbox())){
+                if (block.getLayoutBounds().intersects(player.getFeetHitbox())) {
                     player.moveUp();
                     player.land();
                 }
                 //remove the block if it is outside of the game
-                if(!block.getLayoutBounds().intersects(0,0,2160,720)) {
+                if (!block.getLayoutBounds().intersects(0, 0, 2160, 720)) {
                     blockIterator.remove();
                 }
             }
             //remove the player if hes out of the screen
-            if(player.getY()>=720){
+            if (player.getY() >= 720) {
                 die();
             }
-            movementSpeed+=speedIncrement;
+            movementSpeed += speedIncrement;
             //increase the score by one
             score++;
         }
@@ -51,7 +51,7 @@ public class GameScreen extends Group {
     /**
      * private constructore
      */
-    private GameScreen(){
+    private GameScreen() {
         getChildren().add(player);
         getChildren().add(blocks);
         createGui();
@@ -59,16 +59,21 @@ public class GameScreen extends Group {
 
     /**
      * used to get the instance of the game
+     *
      * @return GameScreen instance
      */
-    public static GameScreen getInstance(){
-        if(instance == null){
+    public static GameScreen getInstance() {
+        if (instance == null) {
             instance = new GameScreen();
             instance.setOnKeyPressed(event -> {
                 switch (event.getCode()) {
-                    case UP: case W: case SPACE:  player.jump();break;
+                    case UP:
+                    case W:
+                    case SPACE:
+                        player.jump();
+                        break;
                     case ESCAPE: //return to the menu
-                         break;
+                        break;
 
                 }
             });
@@ -89,7 +94,7 @@ public class GameScreen extends Group {
     /**
      * used to reset the position of the player and clear all the lines
      */
-    private void restart(){
+    private void restart() {
         score = 0;
         blocks.getChildren().clear();
         createLine();
@@ -100,14 +105,14 @@ public class GameScreen extends Group {
     /**
      * used to create one long line at the start of each level
      */
-    private void createLine(){
-        blocks.getChildren().add(new Block(0,600,2160,50));
+    private void createLine() {
+        blocks.getChildren().add(new Block(0, 600, 2160, 50));
     }
 
     /**
      * used when the player dies
      */
-    private void die(){
+    private void die() {
         gameLoop.stop();
         //switch to the endscreen
     }

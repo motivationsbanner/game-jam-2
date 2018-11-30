@@ -33,13 +33,9 @@ public class Game extends Application {
         startMenu.prefHeightProperty().bind(gameStage.heightProperty());
         changePane(startMenu);
 
-        startMenu.setOnGameStart(() -> {
-            changePane(GameScreen.getInstance());
-        });
+        startMenu.setOnGameStart(() -> changePane(GameScreen.getInstance()));
 
-        startMenu.setOnExit(() -> {
-            System.exit(0);
-        });
+        startMenu.setOnExit(() -> System.exit(0));
 
         //create new scene
         Scene scene = new Scene(root, 1080, 720);
@@ -52,6 +48,7 @@ public class Game extends Application {
 
     /**
      * change the parent which is currently visible
+     *
      * @param parent the parent element to show
      */
     private void changePane(Parent parent) {
