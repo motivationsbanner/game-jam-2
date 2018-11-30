@@ -24,59 +24,59 @@ public class Player extends ImageView {
         updateHitbox();
     }
 
-    public void resetPosition(){
+    public void resetPosition() {
         setX(50);
         setY(300);
     }
 
-    private void animate(){
-        if(!jump&&animation%timebetween==0){
-            setImage(ImageLoader.getInstance().getRunAnimation().get(animation/timebetween));
-            if((animation-1)*timebetween%ImageLoader.getInstance().getRunAnimation().size()==0){
+    private void animate() {
+        if (!jump && animation % timebetween == 0) {
+            setImage(ImageLoader.getInstance().getRunAnimation().get(animation / timebetween));
+            if ((animation - 1) * timebetween % ImageLoader.getInstance().getRunAnimation().size() == 0) {
                 animation = 0;
-            }else{
+            } else {
                 animation++;
             }
-        }else{
+        } else {
             animation++;
         }
     }
 
-    private void move(){
+    private void move() {
         //move the player up if jump == true
-        if(jump&&airtime<=maxAirtime){
-            setY(getY()-jumpSpeed);
+        if (jump && airtime <= maxAirtime) {
+            setY(getY() - jumpSpeed);
             airtime++;
-        }else{
-            setY(getY()+jumpSpeed);
+        } else {
+            setY(getY() + jumpSpeed);
         }
         //else move him down
 
     }
 
-    public void moveUp(){
-        setY(getY()-jumpSpeed);
+    public void moveUp() {
+        setY(getY() - jumpSpeed);
     }
 
-    public void update(){
+    public void update() {
         animate();
         move();
         updateHitbox();
     }
 
-    public void jump(){
+    public void jump() {
         jump = true;
     }
 
-    public void land(){
+    public void land() {
         airtime = 0;
         jump = false;
         animation = 0;
     }
 
-    private void updateHitbox(){
-        feetHitbox = new Rectangle(getX(),getY()+getImage().getHeight()-20,getImage().getWidth()-20,20);
-        playerHitbox = new Rectangle(getX(),getY(),getImage().getWidth(),getImage().getHeight()-20);
+    private void updateHitbox() {
+        feetHitbox = new Rectangle(getX(), getY() + getImage().getHeight() - 20, getImage().getWidth() - 20, 20);
+        playerHitbox = new Rectangle(getX(), getY(), getImage().getWidth(), getImage().getHeight() - 20);
     }
 
     public Bounds getFeetHitbox() {

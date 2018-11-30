@@ -5,27 +5,28 @@ import javafx.scene.image.Image;
 import java.util.ArrayList;
 
 public class ImageLoader {
-    static ImageLoader instance;
+    private static ImageLoader instance;
     private ArrayList<Image> runAnimation = new ArrayList<>();
     private ArrayList<Image> jumpUpAnimation = new ArrayList<>();
     private ArrayList<Image> jumpDownAnimation = new ArrayList<>();
     private Image jumpstandstill;
-    private ImageLoader(){
+
+    private ImageLoader() {
         //add all the run animation images
-        for(int i = 0; i<8;i++){
-            runAnimation.add(new Image("images/run/run"+i+".png"));
+        for (int i = 0; i < 8; i++) {
+            runAnimation.add(new Image("images/run/run" + i + ".png"));
         }
-        for(int i = 0; i<4;i++){
-            jumpUpAnimation.add(new Image("images/jump/jump"+i+".png"));
+        for (int i = 0; i < 4; i++) {
+            jumpUpAnimation.add(new Image("images/jump/jump" + i + ".png"));
         }
-        for(int i = 5; i<9;i++){
-            jumpDownAnimation.add(new Image("images/jump/jump"+i+".png"));
+        for (int i = 5; i < 9; i++) {
+            jumpDownAnimation.add(new Image("images/jump/jump" + i + ".png"));
         }
         jumpstandstill = new Image("images/jump/jump4.png");
     }
 
-    public static ImageLoader getInstance(){
-        if(instance==null){
+    public static ImageLoader getInstance() {
+        if (instance == null) {
             instance = new ImageLoader();
         }
         return instance;
