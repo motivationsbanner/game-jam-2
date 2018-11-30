@@ -1,5 +1,6 @@
 * {
     -fx-font-family: Consolas;
+    -fx-background-color: white;
 }
 
 .start-menu {
@@ -19,6 +20,7 @@
 
 .start-menu .label {
     -fx-padding: 0 0 50px 0;
+    -fx-background-color: transparent;
 }
 
 .start-menu .button {
