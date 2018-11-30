@@ -7,7 +7,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class Game extends Application {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         launch(args);
     }
 
@@ -16,7 +16,7 @@ public class Game extends Application {
         //set root
         AnchorPane root = new AnchorPane();
         //create new scene
-        Scene scene = new Scene(root,1080,720);
+        Scene scene = new Scene(root, 1080, 720);
         gameStage.setScene(scene);
         gameStage.show();
         gameStage.toFront();
