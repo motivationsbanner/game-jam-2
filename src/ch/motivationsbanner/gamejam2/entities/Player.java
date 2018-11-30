@@ -9,9 +9,9 @@ import javafx.scene.shape.Rectangle;
 
 public class Player extends ImageView {
     private double jumpSpeed = 4.0;
-    private boolean jump = false;
+    private boolean jump = false, landed = false;
     private int airtime = 0;
-    private final int maxAirtime = 50;
+    private final int maxAirtime = 40;
     private int animation = 0;
     private int timebetween = 5;
     private Rectangle feetHitbox;
@@ -37,6 +37,18 @@ public class Player extends ImageView {
             }else{
                 animation++;
             }
+        }else if(jump&&animation/timebetween<ImageLoader.getInstance().getJumpUpAnimation().size()&&animation%timebetween==0){
+            setImage(ImageLoader.getInstance().getJumpUpAnimation().get(animation/timebetween));
+            animation++;
+        }else if(jump&&animation/timebetween>=ImageLoader.getInstance().getJumpUpAnimation().size()){
+            setImage(ImageLoader.getInstance().getJumpstandstill());
+            animation++;
+        }else if(landed&&animation/timebetween<ImageLoader.getInstance().getJumpDownAnimation().size()&&animation%timebetween==0){
+            setImage(ImageLoader.getInstance().getJumpDownAnimation().get(animation/timebetween));
+            animation++;
+        }else if(landed&&animation/timebetween>=ImageLoader.getInstance().getJumpDownAnimation().size()){
+            animation = 0;
+            landed = false;
         }else{
             animation++;
         }
@@ -65,13 +77,18 @@ public class Player extends ImageView {
     }
 
     public void jump(){
+        animation = 0;
         jump = true;
     }
 
     public void land(){
-        airtime = 0;
+        if(jump){
+            airtime = 0;
+            animation = 0;
+            landed = true;
+        }
         jump = false;
-        animation = 0;
+
     }
 
     private void updateHitbox(){

@@ -18,8 +18,8 @@ public class ImageLoader {
         for(int i = 0; i<4;i++){
             jumpUpAnimation.add(new Image("images/jump/jump"+i+".png"));
         }
-        for(int i = 5; i<9;i++){
-            jumpDownAnimation.add(new Image("images/jump/jump"+i+".png"));
+        for(int i = 0; i<4;i++){
+            jumpDownAnimation.add(new Image("images/landing/landing"+i+".png"));
         }
         jumpstandstill = new Image("images/jump/jump4.png");
     }
