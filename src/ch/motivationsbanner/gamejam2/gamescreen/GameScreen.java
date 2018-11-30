@@ -1,49 +1,63 @@
 package ch.motivationsbanner.gamejam2.gamescreen;
 
-import ch.motivationsbanner.gamejam2.blocks.Block;
 import ch.motivationsbanner.gamejam2.entities.Player;
+import ch.motivationsbanner.gamejam2.gamesegment.BasicJumpSegment;
+import ch.motivationsbanner.gamejam2.gamesegment.GameSegment;
+import ch.motivationsbanner.gamejam2.gamesegment.StartSegment;
 import ch.motivationsbanner.gamejam2.settings.Settings;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
+import javafx.scene.control.Label;
 
 import java.util.Iterator;
 
 public class GameScreen extends Group {
-    private double movementSpeed = 4;
-    private double speedIncrement = 0.0002;
-    private Group blocks = new Group();
+    private static double movementSpeed = 4;
+    private static double speedIncrement = 0.0002;
+    private static Group blocks = new Group();
     private static Player player = new Player();
-    private int score = 0;
-    private AnimationTimer gameLoop = new AnimationTimer() {
+    private static int score = 0;
+    private static int timer = 0;
+    private static Label scoreLabel = new Label("Score: "+score);
+    private static AnimationTimer gameLoop = new AnimationTimer() {
         @Override
         public void handle(long now) {
+            if(timer % 30 == 0){
+                timer = 0;
+                score++;
+                scoreLabel.setText("Score: "+score);
+            }
             player.update();
             //move the blocks to the left for the gamespeed
+            boolean addnewGameScreen = false;
             Iterator blockIterator = blocks.getChildren().iterator();
             while (blockIterator.hasNext()) {
-                Block block = (Block) blockIterator.next();
+                GameSegment block = (GameSegment) blockIterator.next();
                 block.move(movementSpeed);
                 //check if the player collides with a block and the player has to die
-                if (block.getLayoutBounds().intersects(player.getPlayerHitbox())) {
+                if (block.collidePlayer(player)) {
                     die();
                 }
                 //if the feet frome the player hit the hitbox move the player up
-                if (block.getLayoutBounds().intersects(player.getFeetHitbox())) {
+                if (block.collideFeet(player)) {
                     player.moveUp();
                     player.land();
                 }
                 //remove the block if it is outside of the game
                 if (!block.getLayoutBounds().intersects(0, 0, 2160, 720)) {
                     blockIterator.remove();
+                    addnewGameScreen = true;
                 }
             }
             //remove the player if hes out of the screen
             if (player.getY() >= 720) {
                 die();
             }
+            if(addnewGameScreen){
+                createLine();
+            }
             movementSpeed += speedIncrement;
-            //increase the score by one
-            score++;
+            timer++;
         }
     };
     private static GameScreen instance;
@@ -54,6 +68,7 @@ public class GameScreen extends Group {
     private GameScreen() {
         getChildren().add(player);
         getChildren().add(blocks);
+        getChildren().add(scoreLabel);
         createGui();
     }
 
@@ -74,7 +89,7 @@ public class GameScreen extends Group {
                         break;
                     case ESCAPE: //return to the menu
                         break;
-
+                    case R:restart();break;
                 }
             });
 
@@ -94,25 +109,27 @@ public class GameScreen extends Group {
     /**
      * used to reset the position of the player and clear all the lines
      */
-    private void restart() {
+    private static void restart() {
         score = 0;
         blocks.getChildren().clear();
-        createLine();
+        blocks.getChildren().add(new StartSegment());
+        blocks.getChildren().add(new BasicJumpSegment());
         player.resetPosition();
+        scoreLabel.setText("Score: "+score);
         gameLoop.start();
     }
 
     /**
      * used to create one long line at the start of each level
      */
-    private void createLine() {
-        blocks.getChildren().add(new Block(0, 600, 2160, 50));
+    private static void createLine() {
+        blocks.getChildren().add(new BasicJumpSegment());
     }
 
     /**
      * used when the player dies
      */
-    private void die() {
+    private static void die() {
         gameLoop.stop();
         //switch to the endscreen
     }
