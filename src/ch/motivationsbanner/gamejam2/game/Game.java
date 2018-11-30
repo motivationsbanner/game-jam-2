@@ -22,8 +22,12 @@ public class Game extends Application {
     @Override
     public void start(Stage gameStage) {
 
+        gameStage.setTitle("game-jam-2");
+
         // let's load the startMenu first
         StartMenu startMenu = new StartMenu();
+        startMenu.prefWidthProperty().bind(gameStage.widthProperty());
+        startMenu.prefHeightProperty().bind(gameStage.heightProperty());
         changePane(startMenu);
 
         startMenu.setOnGameStart(() -> {
@@ -36,6 +40,8 @@ public class Game extends Application {
 
         //create new scene
         Scene scene = new Scene(root, 1080, 720);
+        scene.getStylesheets().add("style.css");
+
         gameStage.setScene(scene);
         gameStage.show();
         gameStage.toFront();
