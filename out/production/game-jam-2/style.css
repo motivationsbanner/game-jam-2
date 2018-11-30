@@ -1,0 +1,39 @@
+* {
+    -fx-font-family: Consolas;
+}
+
+.start-menu {
+    -fx-background-color: #e7f8ff;
+    -fx-padding: 80px 0;
+}
+
+.start-menu .label * {
+    -fx-fill: linear-gradient(to right, #5583f0, #00afff, #00cfdf, #00e593, #bbee55);
+
+    -fx-font-weight: bold;
+    -fx-font-size: 80px;
+
+    -fx-stroke: black;
+    -fx-stroke-width: 1;
+}
+
+.start-menu .label {
+    -fx-padding: 0 0 50px 0;
+}
+
+.start-menu .button {
+    -fx-padding: 20px;
+    -fx-font-size: 30px;
+
+    -fx-background-color: white;
+
+    -fx-border-color: black;
+    -fx-border-width: 5px;
+    -fx-border-style: solid;
+
+    -fx-min-width: 300px;
+}
+
+.start-menu .button:hover {
+    -fx-background-color: #e7f1ff;
+}

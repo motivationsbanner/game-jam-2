@@ -1,11 +1,13 @@
 package ch.motivationsbanner.gamejam2.game;
 
 
+import ch.motivationsbanner.gamejam2.gamescreen.GameScreen;
 import ch.motivationsbanner.gamejam2.menu.StartMenu;
+import ch.motivationsbanner.gamejam2.settings.Settings;
 import javafx.application.Application;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class Game extends Application {
@@ -22,6 +24,7 @@ public class Game extends Application {
     @Override
     public void start(Stage gameStage) {
 
+        Settings.stage = gameStage;
         gameStage.setTitle("game-jam-2");
 
         // let's load the startMenu first
@@ -31,7 +34,7 @@ public class Game extends Application {
         changePane(startMenu);
 
         startMenu.setOnGameStart(() -> {
-            // TODO: load game pane
+            changePane(GameScreen.getInstance());
         });
 
         startMenu.setOnExit(() -> {
@@ -48,11 +51,11 @@ public class Game extends Application {
     }
 
     /**
-     * change the pane which is currently visible
-     * @param pane the pane to show
+     * change the parent which is currently visible
+     * @param parent the parent element to show
      */
-    private void changePane(Pane pane) {
+    private void changePane(Parent parent) {
         root.getChildren().clear();
-        root.getChildren().add(pane);
+        root.getChildren().add(parent);
     }
 }
